@@ -9,14 +9,17 @@ class Texture {
 		Texture(std::wstring fileName, ID3D11Device* d);
 		~Texture();
 
-		void SetAsTileMap(int noX, int noY);
+		void SetAsTileMap(int noX, int noY, int tW, int tH);
 
 
 		int texTileSizeX = 0;
-		int texTileSizeX = 0;
+		int texTileSizeY = 0;
 
-		int noXTiles = 0;
+		int noColumns = 0;
 		int noYTiles = 0;
+
+		int curColumn = 0;
+		int curRow = 0;
 
 
 		std::wstring	_textureName;

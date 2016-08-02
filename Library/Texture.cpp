@@ -9,9 +9,12 @@ Texture::Texture(std::wstring n, ID3D11Device* d) : _textureName(n) {
 }
 
 
-void Texture::SetAsTileMap(int noX, int noY) {
+void Texture::SetAsTileMap(int noX, int noY, int tW, int tH) {
 
 	noXTiles = noX;
 	noYTiles = noY;
+
+	texTileSizeX = tW;
+	texTileSizeY = tH;
 
 }

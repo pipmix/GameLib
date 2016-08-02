@@ -5,10 +5,12 @@ Game::Game() {
 	noMaps = noEnemy = noPlayer = 0;
 
 
-	textures["chara"] = new Texture(L"chara", _engine._device);
+	textures["chara"] = new Texture(L"chara", engine._device);
+	textures["chara"]->SetAsTileMap(4,4,16,16);
 
-	tex[0] = new Texture(L"wallTopFloor",_engine._device);
-	tex[1] = new Texture(L"classical_ruin_tiles2", _engine._device);
+
+	tex[0] = new Texture(L"wallTopFloor", engine._device);
+	tex[1] = new Texture(L"classical_ruin_tiles2", engine._device);
 
 	lev[0] = new LevelData(L"level02", tex[1], 0 ,0);
 	noMaps++;
@@ -26,9 +28,9 @@ Game::~Game() {
 }
 bool Game::Update() {
 
-	auto k = _engine._keyboard.GetState();
-	auto m = _engine._mouse.GetState();
-	auto g = _engine._gamePad.GetState(0);
+	auto k = engine._keyboard.GetState();
+	auto m = engine._mouse.GetState();
+	auto g = engine._gamePad.GetState(0);
 
 	// KEYBOARD
 	if (k.Escape)return 1;
@@ -37,20 +39,20 @@ bool Game::Update() {
 
 	// GAMEPAD
 	if (g.IsConnected()) {
-		_engine._buttons.Update(g);
+		engine._buttons.Update(g);
 
-		if (_engine._buttons.a == GamePad::ButtonStateTracker::PRESSED){
-
-		}
-		if (_engine._buttons.a == GamePad::ButtonStateTracker::RELEASED) {
+		if (engine._buttons.a == GamePad::ButtonStateTracker::PRESSED){
 
 		}
-
-
-		if (_engine._buttons.b == GamePad::ButtonStateTracker::PRESSED) {
+		if (engine._buttons.a == GamePad::ButtonStateTracker::RELEASED) {
 
 		}
-		if (_engine._buttons.b == GamePad::ButtonStateTracker::RELEASED) {
+
+
+		if (engine._buttons.b == GamePad::ButtonStateTracker::PRESSED) {
+
+		}
+		if (engine._buttons.b == GamePad::ButtonStateTracker::RELEASED) {
 
 		}
 
@@ -93,12 +95,12 @@ bool Game::Update() {
 void Game::Draw() {
 
 	const float fillColor[] = { 0.0f, 0.0f, 0.0f, 1.000f };
-	_engine.context->ClearRenderTargetView(_engine.rtv, fillColor);
+	engine.context->ClearRenderTargetView(engine.rtv, fillColor);
 
 
 	switch (currentGameState){
 		case InitGS: {
-			sb->Begin(SpriteSortMode_Immediate, _engine._commonStates->NonPremultiplied());
+			sb->Begin(SpriteSortMode_Immediate, engine._commonStates->NonPremultiplied());
 			sb->Draw(tex[0]->textureResourceView, XMFLOAT2(0, 0));
 			for (int i = 0; i < noMaps; i++) lev[i]->Draw();
 			sb->End();
@@ -106,14 +108,14 @@ void Game::Draw() {
 			break;
 		}
 		case TitleGS: {
-			sb->Begin(SpriteSortMode_Immediate, _engine._commonStates->NonPremultiplied());
+			sb->Begin(SpriteSortMode_Immediate, engine._commonStates->NonPremultiplied());
 			sb->Draw(tex[0]->textureResourceView, XMFLOAT2(0, 0));
 			sb->End();
 
 		break;
 		}
 		case GameGS: {
-				 sb->Begin(SpriteSortMode_Immediate, _engine._commonStates->NonPremultiplied(), _engine._commonStates->PointWrap(), nullptr, nullptr, nullptr, camera->transformMatrix());
+				 sb->Begin(SpriteSortMode_Immediate, engine._commonStates->NonPremultiplied(), engine._commonStates->PointWrap(), nullptr, nullptr, nullptr, camera->transformMatrix());
 				 for (int i = 0; i < noMaps; i++) lev[i]->Draw();
 
 				 sb->End();
@@ -155,7 +157,7 @@ void Game::Draw() {
 
 
 
-	_engine._swapChain->Present(1, 0);
+	engine._swapChain->Present(1, 0);
 }
 
 void Game::Suspend() {
