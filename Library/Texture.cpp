@@ -11,8 +11,8 @@ Texture::Texture(std::wstring n, ID3D11Device* d) : _textureName(n) {
 
 void Texture::SetAsTileMap(int noX, int noY, int tW, int tH) {
 
-	noXTiles = noX;
-	noYTiles = noY;
+	noColumns = noX;
+	noRows = noY;
 
 	texTileSizeX = tW;
 	texTileSizeY = tH;

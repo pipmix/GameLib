@@ -3,7 +3,7 @@
 #include "Library\EngineCore.h"
 
 extern SpriteBatch* sb;
-extern EngineCore engine;
+
 
 enum GameState { InitGS , TitleGS, GameGS };
 
@@ -34,7 +34,7 @@ class Game {
 
 	private:
 
-		//EngineCore engine;
+		EngineCore engine;
 
 		GameState currentGameState = InitGS;
 

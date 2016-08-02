@@ -16,7 +16,7 @@ class Texture {
 		int texTileSizeY = 0;
 
 		int noColumns = 0;
-		int noYTiles = 0;
+		int noRows = 0;
 
 		int curColumn = 0;
 		int curRow = 0;
