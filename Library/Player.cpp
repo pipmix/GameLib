@@ -11,5 +11,8 @@ void Player::Update(float t) {
 }
 void Player::Draw() {
 
+	
+
+	sb->Draw(tex->textureResourceView, pos, &tex->sourceRect);
 
 }

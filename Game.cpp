@@ -2,7 +2,10 @@
 
 
 Game::Game() {
-	noMaps = noEnemy = noPlayer = 0;
+	noMaps = noEnemy  = 0;
+
+	players[0] = new Player();
+	noPlayers++;
 
 
 	textures["chara"] = new Texture(L"chara", engine._device);
@@ -15,9 +18,9 @@ Game::Game() {
 	lev[0] = new LevelData(L"level02", tex[1], 0 ,0);
 	noMaps++;
 
-	players[0] = new Player();
-	noPlayer++;
 
+	players[0]->tex = textures["chara"];
+	players[0]->pos = { 50, 50 };
 
 	camera = new Camera();
 	SetGameState(GameGS);
@@ -27,6 +30,8 @@ Game::~Game() {
 
 }
 bool Game::Update() {
+
+	engine.engineTimer.Update();
 
 	auto k = engine._keyboard.GetState();
 	auto m = engine._mouse.GetState();
@@ -72,6 +77,7 @@ bool Game::Update() {
 		}
 		GameGS: {
 				 for (int i = 0; i < noMaps; i++) lev[i]->Update();
+				 for (int i = 0; i < noPlayers; i++) players[i]->Update(engine.engineTimer.GetDelta());
 				 camera->Update(0.0f); 
 
 				 break;
@@ -117,7 +123,7 @@ void Game::Draw() {
 		case GameGS: {
 				 sb->Begin(SpriteSortMode_Immediate, engine._commonStates->NonPremultiplied(), engine._commonStates->PointWrap(), nullptr, nullptr, nullptr, camera->transformMatrix());
 				 for (int i = 0; i < noMaps; i++) lev[i]->Draw();
-
+				 for (int i = 0; i < noPlayers; i++) players[i]->Draw();
 				 sb->End();
 		break;
 		}

@@ -12,14 +12,20 @@ class Texture {
 		void SetAsTileMap(int noX, int noY, int tW, int tH);
 
 
-		int texTileSizeX = 0;
-		int texTileSizeY = 0;
+		void MoveSourceRect(int p);
+		void MoveSourceRect(int x, int y);
+
+
+		int tileW = 0;
+		int tileH = 0;
 
 		int noColumns = 0;
 		int noRows = 0;
 
 		int curColumn = 0;
 		int curRow = 0;
+
+		RECT sourceRect = { 0,0,0,0 };
 
 
 		std::wstring	_textureName;

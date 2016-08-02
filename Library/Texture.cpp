@@ -14,7 +14,31 @@ void Texture::SetAsTileMap(int noX, int noY, int tW, int tH) {
 	noColumns = noX;
 	noRows = noY;
 
-	texTileSizeX = tW;
-	texTileSizeY = tH;
+	tileW = tW;
+	tileH = tH;
 
+	sourceRect = { 0, 0, tW, tH };
+
+}
+
+void Texture::MoveSourceRect(int p) {
+	// moves to place
+	// starts at 0
+	curRow = (p % noColumns) - 1; // 2
+	curColumn = (p / noColumns); //12
+
+	sourceRect.left = (curRow * tileW);
+	sourceRect.top = (curColumn * tileH);
+	sourceRect.right = sourceRect.left + tileW;
+	sourceRect.bottom = sourceRect.top + tileH;
+}
+
+void Texture::MoveSourceRect(int x, int y) {
+	curRow = x;
+	curColumn = y;
+
+	sourceRect.left = (curRow * tileW);
+	sourceRect.top = (curColumn * tileH);
+	sourceRect.right = sourceRect.left + tileW;
+	sourceRect.bottom = sourceRect.top + tileH;
 }

@@ -2,7 +2,7 @@
 #include "GameObj.h"
 
 
-
+extern SpriteBatch* sb;
 
 class Player : public GameObj{
 

@@ -14,10 +14,11 @@ public:
 	virtual void Draw() = 0;
 
 
-	XMFLOAT3 pos;
+	XMFLOAT2 pos;
 	XMFLOAT3 rot;
 	XMFLOAT3 scale;
 	XMFLOAT2 vel;
+	XMFLOAT2 mid;
 	RECT collision;
 
 	bool isActive;

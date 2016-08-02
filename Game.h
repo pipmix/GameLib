@@ -46,6 +46,6 @@ class Game {
 		Texture* tex [20];
 		LevelData* lev[20];
 		Camera* camera;
-		int noMaps, noEnemy, noPlayer;
+		int noMaps, noEnemy;
 
 };
