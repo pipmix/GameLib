@@ -1,3 +1,0 @@
-﻿  Player.cpp
-c:\repo\gamelib\library\player.cpp(18): warning C4305: '+=': truncation from 'double' to 'float'
-  GameLib.vcxproj -> C:\Repo\gamelib\VS\GameLib\Debug\GameLib.exe
