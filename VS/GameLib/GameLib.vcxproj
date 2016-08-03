@@ -153,6 +153,7 @@
     <ClInclude Include="..\..\Library\EngineScene.h" />
     <ClInclude Include="..\..\Library\EngineTimer.h" />
     <ClInclude Include="..\..\Library\GameObj.h" />
+    <ClInclude Include="..\..\Library\Helpers.h" />
     <ClInclude Include="..\..\Library\LevelData.h" />
     <ClInclude Include="..\..\Library\Player.h" />
     <ClInclude Include="..\..\Library\Sprite.h" />
@@ -166,6 +167,7 @@
     <ClCompile Include="..\..\Library\EngineCore.cpp" />
     <ClCompile Include="..\..\Library\EngineDataTypes.cpp" />
     <ClCompile Include="..\..\Library\EngineTimer.cpp" />
+    <ClCompile Include="..\..\Library\Helpers.cpp" />
     <ClCompile Include="..\..\Library\LevelData.cpp" />
     <ClCompile Include="..\..\Library\Player.cpp" />
     <ClCompile Include="..\..\Library\Texture.cpp" />

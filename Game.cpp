@@ -13,14 +13,14 @@ Game::Game() {
 
 
 	tex[0] = new Texture(L"wallTopFloor", engine._device);
-	tex[1] = new Texture(L"classical_ruin_tiles2", engine._device);
+	tex[1] = new Texture(L"ruins", engine._device);
 
 	lev[0] = new LevelData(L"level02", tex[1], 0 ,0);
 	noMaps++;
 
 
 	players[0]->tex = textures["chara"];
-	players[0]->pos = { 50, 50 };
+	players[0]->pos = { 50, 100 };
 
 	camera = new Camera();
 	SetGameState(GameGS);
@@ -46,36 +46,65 @@ bool Game::Update() {
 	if (g.IsConnected()) {
 		engine._buttons.Update(g);
 
-		if (engine._buttons.a == GamePad::ButtonStateTracker::PRESSED){
+		if (engine._buttons.a == GamePad::ButtonStateTracker::PRESSED) moves.attack = 1;
+		if (engine._buttons.a == GamePad::ButtonStateTracker::RELEASED) moves.attack = 0;
+		if (engine._buttons.b == GamePad::ButtonStateTracker::PRESSED) moves.jump = 1;
+		if (engine._buttons.b == GamePad::ButtonStateTracker::RELEASED) moves.jump = 0;
 
+		if (g.thumbSticks.leftX < 0) {
+			moves.left = 1;
+			moves.right = 0;
 		}
-		if (engine._buttons.a == GamePad::ButtonStateTracker::RELEASED) {
-
+		else if (g.thumbSticks.leftX > 0) {
+			moves.left = 0;
+			moves.right = 1;
 		}
-
-
-		if (engine._buttons.b == GamePad::ButtonStateTracker::PRESSED) {
-
+		else {
+			moves.left = 0;
+			moves.right = 0;
 		}
-		if (engine._buttons.b == GamePad::ButtonStateTracker::RELEASED) {
+		
 
+		if (g.thumbSticks.leftY < 0) {
+			moves.up = 1;
+			moves.down = 0;
 		}
+		else if (g.thumbSticks.leftY > 0) {
+			moves.up = 0;
+			moves.down = 1;
+		}
+		else {
+			moves.up = 0;
+			moves.down = 0;
+		}
+		
+		
+		
+
+		
 
 		//state.triggers.left
 		//state.IsAPressed()
 	}
 
 	switch (currentGameState) {
-		InitGS: {
+		case InitGS: {
 
 		break;
 		}
-		TitleGS: {
+		case TitleGS: {
 
 
 			break;
 		}
-		GameGS: {
+		case GameGS: {
+
+				 // Update Camera
+				 // Update Enemys
+				 // Update Players
+				 // Update Weapons
+				 // Update HUD
+
 				 for (int i = 0; i < noMaps; i++) lev[i]->Update();
 				 for (int i = 0; i < noPlayers; i++) players[i]->Update(engine.engineTimer.GetDelta());
 				 camera->Update(0.0f); 
@@ -85,13 +114,6 @@ bool Game::Update() {
 
 	}
 
-	//_engine._primitiveBatch = new PrimitiveBatch<VertexPositionColor>(_engine._deviceContext);
-	//_engine._basicEffect = new BasicEffect(_engine._device);
-	//_engine._basicEffect->SetProjection(XMMatrixOrthographicOffCenterRH(0, 720, 480, 0, 0, 1));
-	//_engine._basicEffect->SetVertexColorEnabled(1);
-	//_engine._basicEffect->GetVertexShaderBytecode(&_engine.shaderByteCode, &_engine.byteCodeLength);
-	//_engine._device->CreateInputLayout(VertexPositionColor::InputElements, VertexPositionColor::InputElementCount, _engine.shaderByteCode, _engine.byteCodeLength, &_engine._inputLayout);
-
 
 
 	return 0;
@@ -100,7 +122,7 @@ bool Game::Update() {
 }
 void Game::Draw() {
 
-	const float fillColor[] = { 0.0f, 0.0f, 0.0f, 1.000f };
+	const float fillColor[] = { 0.0f, 0.0f, 0.2f, 1.000f };
 	engine.context->ClearRenderTargetView(engine.rtv, fillColor);
 
 
@@ -121,7 +143,7 @@ void Game::Draw() {
 		break;
 		}
 		case GameGS: {
-				 sb->Begin(SpriteSortMode_Immediate, engine._commonStates->NonPremultiplied(), engine._commonStates->PointWrap(), nullptr, nullptr, nullptr, camera->transformMatrix());
+				 sb->Begin(SpriteSortMode_Deferred, nullptr, engine._commonStates->PointWrap(), nullptr, nullptr, nullptr, camera->transformMatrix());
 				 for (int i = 0; i < noMaps; i++) lev[i]->Draw();
 				 for (int i = 0; i < noPlayers; i++) players[i]->Draw();
 				 sb->End();
@@ -129,16 +151,6 @@ void Game::Draw() {
 		}
 
 	}
-
-
-
-
-	
-
-	
-
-
-	
 
 
 

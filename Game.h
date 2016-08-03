@@ -3,6 +3,8 @@
 #include "Library\EngineCore.h"
 
 extern SpriteBatch* sb;
+extern float gravity;
+extern Moves moves;
 
 
 enum GameState { InitGS , TitleGS, GameGS };
@@ -29,7 +31,7 @@ class Game {
 		void SetGameState(GameState gs);
 
 
-		map<string, Texture*> textures;
+		std::map<std::string, Texture*> textures;
 
 
 	private:

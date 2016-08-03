@@ -36,3 +36,28 @@ struct CIRC{
 
 };
 
+class Animation {
+
+public:
+	std::string name;
+	int noFrames;
+	int startFrame;
+	float speed;
+	bool loop;
+};
+
+
+struct Moves {
+
+	bool left = 0;
+	bool right = 0;
+	bool up = 0;
+	bool down = 0;
+
+	bool jump = 0;
+	bool activate = 0;
+	bool attack = 0;
+	bool start = 0;
+
+
+};

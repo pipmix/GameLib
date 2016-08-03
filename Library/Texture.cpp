@@ -22,10 +22,9 @@ void Texture::SetAsTileMap(int noX, int noY, int tW, int tH) {
 }
 
 void Texture::MoveSourceRect(int p) {
-	// moves to place
-	// starts at 0
-	curRow = (p % noColumns) - 1; // 2
-	curColumn = (p / noColumns); //12
+
+	curRow = (p % noColumns) - 1; 
+	curColumn = (p / noColumns); 
 
 	sourceRect.left = (curRow * tileW);
 	sourceRect.top = (curColumn * tileH);

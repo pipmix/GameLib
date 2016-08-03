@@ -9,9 +9,11 @@ HINSTANCE hInst;
 HWND hWnd;
 
 SpriteBatch* sb = nullptr;
+float gravity = 400;
+Moves moves;
 
 
-std::wstring gPath = L"C:/Files/aab/";
+std::wstring gPath = L"C:/Box/Box Sync/Data/GameLib/";
 std::wstring gTexturePath = L"Textures/";
 std::wstring gShaderPath = L"Shaders/";
 std::wstring gMeshPath = L"Meshes/";

@@ -9,7 +9,7 @@ Camera::Camera() {
 
 	XMStoreFloat4x4(&view, XMMatrixIdentity());
 	speed = 5;
-	zoom = 0;
+	zoom = 1.0f;
 	updateMatrix = false;
 
 	scale = { 1, 1, 1 };
@@ -29,7 +29,8 @@ Camera::Camera() {
 }
 
 XMMATRIX Camera::transformMatrix() {
-	XMFLOAT2 cPos = { 500,500 };
+	XMFLOAT2 cPos = { 250,250 };
+	updateMatrix = true;
 
 	if (updateMatrix) {
 
