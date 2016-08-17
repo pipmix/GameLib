@@ -9,6 +9,7 @@ HINSTANCE hInst;
 HWND hWnd;
 
 SpriteBatch* sb = nullptr;
+Input* input = nullptr;
 float gravity = 400;
 Moves moves;
 
@@ -18,6 +19,11 @@ std::wstring gTexturePath = L"Textures/";
 std::wstring gShaderPath = L"Shaders/";
 std::wstring gMeshPath = L"Meshes/";
 
+std::string debugStr01 = "";
+std::string debugStr02 = "";
+
+bool GlobalBool01 = 0;
+bool GlobalBool02 = 0;
 
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -40,7 +46,7 @@ int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,i
 	RegisterClassEx(&wcex);
 
 	hInst = hInstance; 
-	hWnd = CreateWindow(szWindowClass,szTitle,WS_OVERLAPPEDWINDOW,CW_USEDEFAULT, CW_USEDEFAULT,720, 480,NULL,NULL,hInstance,NULL);
+	hWnd = CreateWindow(szWindowClass,szTitle,WS_OVERLAPPEDWINDOW,CW_USEDEFAULT, CW_USEDEFAULT,512, 512,NULL,NULL,hInstance,NULL);
 	ShowWindow(hWnd,nCmdShow);
 	UpdateWindow(hWnd);
 

@@ -3,27 +3,37 @@
 
 Game::Game() {
 	noMaps = noEnemy  = 0;
+	input = new Input();
 
-	players[0] = new Player();
-	noPlayers++;
+	player = new Player();
+
 
 
 	textures["chara"] = new Texture(L"chara", engine._device);
 	textures["chara"]->SetAsTileMap(4,4,16,16);
 
+	textures["dat"] = new Texture(L"dat", engine._device);
+	textures["dat"]->SetAsTileMap(16, 16, 8, 8);
+
+	textures["alpha"] = new Texture(L"alpha", engine._device);
+	textures["alpha"]->SetAsTileMap(8, 4, 8, 8);
 
 	tex[0] = new Texture(L"wallTopFloor", engine._device);
 	tex[1] = new Texture(L"ruins", engine._device);
 
 	lev[0] = new LevelData(L"level02", tex[1], 0 ,0);
-	noMaps++;
+	lev[1] = new LevelData(L"level03", tex[1], 320, 320);
+	noMaps = 2;
 
 
-	players[0]->tex = textures["chara"];
-	players[0]->pos = { 50, 100 };
+	player->texture = textures["chara"];
+	player->InitCollision();
 
 	camera = new Camera();
 	SetGameState(GameGS);
+
+	
+	
 }
 Game::~Game() {
 
@@ -33,86 +43,35 @@ bool Game::Update() {
 
 	engine.engineTimer.Update();
 
-	auto k = engine._keyboard.GetState();
-	auto m = engine._mouse.GetState();
-	auto g = engine._gamePad.GetState(0);
 
-	// KEYBOARD
-	if (k.Escape)return 1;
+	if (currentGameState == GameGS) {
 
-	// MOUSE
+		for (int i = 0; i < noMaps; i++) lev[i]->Update();
+		player->Update(engine.engineTimer.GetDelta());
 
-	// GAMEPAD
-	if (g.IsConnected()) {
-		engine._buttons.Update(g);
-
-		if (engine._buttons.a == GamePad::ButtonStateTracker::PRESSED) moves.attack = 1;
-		if (engine._buttons.a == GamePad::ButtonStateTracker::RELEASED) moves.attack = 0;
-		if (engine._buttons.b == GamePad::ButtonStateTracker::PRESSED) moves.jump = 1;
-		if (engine._buttons.b == GamePad::ButtonStateTracker::RELEASED) moves.jump = 0;
-
-		if (g.thumbSticks.leftX < 0) {
-			moves.left = 1;
-			moves.right = 0;
+		if (lev[0]->CollideEnclosureRect(player)) {
+			lev[0]->Collide(player);
+			lev[0]->CollidePoints(player);
 		}
-		else if (g.thumbSticks.leftX > 0) {
-			moves.left = 0;
-			moves.right = 1;
+		if (lev[1]->CollideEnclosureRect(player)) {
+			lev[1]->Collide(player);
+			lev[1]->CollidePoints(player);
 		}
-		else {
-			moves.left = 0;
-			moves.right = 0;
-		}
-		
 
-		if (g.thumbSticks.leftY < 0) {
-			moves.up = 1;
-			moves.down = 0;
-		}
-		else if (g.thumbSticks.leftY > 0) {
-			moves.up = 0;
-			moves.down = 1;
-		}
-		else {
-			moves.up = 0;
-			moves.down = 0;
-		}
-		
-		
-		
 
-		
 
-		//state.triggers.left
-		//state.IsAPressed()
+
+		//player->SetCollision();
+		//isCollide = lev[0]->Collide2(player);
+
+
+		camera->Update(0.0f);
+
+
 	}
 
-	switch (currentGameState) {
-		case InitGS: {
-
-		break;
-		}
-		case TitleGS: {
 
 
-			break;
-		}
-		case GameGS: {
-
-				 // Update Camera
-				 // Update Enemys
-				 // Update Players
-				 // Update Weapons
-				 // Update HUD
-
-				 for (int i = 0; i < noMaps; i++) lev[i]->Update();
-				 for (int i = 0; i < noPlayers; i++) players[i]->Update(engine.engineTimer.GetDelta());
-				 camera->Update(0.0f); 
-
-				 break;
-		}
-
-	}
 
 
 
@@ -125,54 +84,52 @@ void Game::Draw() {
 	const float fillColor[] = { 0.0f, 0.0f, 0.2f, 1.000f };
 	engine.context->ClearRenderTargetView(engine.rtv, fillColor);
 
+	if (currentGameState = GameGS) {
 
-	switch (currentGameState){
-		case InitGS: {
-			sb->Begin(SpriteSortMode_Immediate, engine._commonStates->NonPremultiplied());
-			sb->Draw(tex[0]->textureResourceView, XMFLOAT2(0, 0));
-			for (int i = 0; i < noMaps; i++) lev[i]->Draw();
-			sb->End();
 
-			break;
+
+
+
+		// Draw Everything else
+		sb->Begin(SpriteSortMode_Deferred, nullptr, engine._commonStates->PointWrap(), nullptr, nullptr, nullptr, camera->transformMatrix(player->position));
+		for (int i = 0; i < noMaps; i++) lev[i]->Draw();
+		player->Draw();
+		sb->End();
+
+
+
+		// DRAW HUD
+		sb->Begin(SpriteSortMode_Deferred, engine._commonStates->NonPremultiplied());
+
+		if (isCollide) {
+			textures["dat"]->MoveSourceRect(0);
+			sb->Draw(textures["dat"]->textureResourceView, XMFLOAT2(0.0f, 10.0f), &textures["dat"]->sourceRect);
+			textures["dat"]->MoveSourceRect(1);
+			sb->Draw(textures["dat"]->textureResourceView, XMFLOAT2(0.0f, 18.0f), &textures["dat"]->sourceRect);
+			textures["dat"]->MoveSourceRect(2);
+			sb->Draw(textures["dat"]->textureResourceView, XMFLOAT2(0.0f, 26.0f), &textures["dat"]->sourceRect);
+			textures["dat"]->MoveSourceRect(3);
+			sb->Draw(textures["dat"]->textureResourceView, XMFLOAT2(0.0f, 34.0f), &textures["dat"]->sourceRect);
+
+
+
 		}
-		case TitleGS: {
-			sb->Begin(SpriteSortMode_Immediate, engine._commonStates->NonPremultiplied());
-			sb->Draw(tex[0]->textureResourceView, XMFLOAT2(0, 0));
-			sb->End();
 
-		break;
-		}
-		case GameGS: {
-				 sb->Begin(SpriteSortMode_Deferred, nullptr, engine._commonStates->PointWrap(), nullptr, nullptr, nullptr, camera->transformMatrix());
-				 for (int i = 0; i < noMaps; i++) lev[i]->Draw();
-				 for (int i = 0; i < noPlayers; i++) players[i]->Draw();
-				 sb->End();
-		break;
-		}
+		textures["alpha"]->MoveSourceRect(1);
+		sb->Draw(textures["alpha"]->textureResourceView, XMFLOAT2(30.0f, 34.0f), &textures["alpha"]->sourceRect);
 
+		PrintString("af ce", 0200, 200);
+		PrintString("aaaaa bbbbbb aaaaa cccc fffff", 0, 0);
+
+		PrintString(debugStr01, 0, 20);
+		PrintString(debugStr02, 0, 30);
+
+		sb->End();
+
+
+		
+		
 	}
-
-
-
-	/*
-	CommonStates states(_engine._device);
-	_engine._deviceContext->OMSetBlendState(states.Opaque(), nullptr, 0xFFFFFFFF);
-	_engine._deviceContext->OMSetDepthStencilState(states.DepthNone(), 0);
-	_engine._deviceContext->RSSetState(states.CullNone());
-
-	_engine._basicEffect->Apply(_engine._deviceContext);
-	_engine._deviceContext->IASetInputLayout(_engine._inputLayout);
-
-	_engine._primitiveBatch->Begin();
-
-	_engine._primitiveBatch->DrawLine( VertexPositionColor(XMFLOAT3{ 0.0f,0.0f,0.0f }, XMFLOAT4{ 1.0f,1.0f,0.0f,0.0f }), VertexPositionColor(XMFLOAT3{ 0.5f,0.5f,1.0f }, XMFLOAT4{ 1.0f,1.0f,0.0f,1.0f }));
-
-	
-	//XMFLOAT3 const& position, XMFLOAT4 const& color
-
-	_engine._primitiveBatch->End();
-	*/
-
 
 
 	engine._swapChain->Present(1, 0);
@@ -192,30 +149,6 @@ void Game::Minimize() {
 }
 
 void Game::Restore() {
-	/*
-	_engine._buttons.Reset();
-
-	char buffer[MAX_PATH];
-	//GetModuleFileName(NULL, buffer, MAX_PATH);
-	std::string::size_type pos = std::string(buffer).find_last_of("\\/");
-	std::string str1 =  std::string(buffer).substr(0, pos);
-
-	MYVERTEX sqaure[] = 
-	{
-		{0.0f, 2.0f, 0.0f, 0.0f, coolorrgb },
-		{ 0.0f, 2.0f, 0.0f, 0.0f, coolorrgb },
-		{ 0.0f, 2.0f, 0.0f, 0.0f, coolorrgb }
-
-	};
-
-	void DrawRect(int x, int y, int w, int h) {
-
-		RECT r = { x,y,x + w,y + h };
-		_engine.
-
-
-	}
-	*/
 
 }
 
@@ -243,4 +176,33 @@ void Game::SetGameState(GameState gs) {
 
 
 	}
+}
+
+
+
+void Game::PrintString(string s, int x, int y) {
+	Texture* t = textures["alpha"];
+	int index = 0;
+	int tW = t->tileW;
+
+
+	// num 0 = 48
+	// num 9 = 57
+	// . = 46
+	// ! = 33      , = 44
+	
+
+	for (int i = 0; i <= s.length(); i++) {
+
+		if (static_cast<int>(s[i]) == 32)index = 31;
+		else index = (static_cast<int>(s[i])) - 96;
+
+		textures["alpha"]->MoveSourceRect(index);
+		sb->Draw(textures["alpha"]->textureResourceView, XMFLOAT2((float)((i*tW)+x), (float)y), &textures["alpha"]->sourceRect);
+
+
+	}
+
+
+
 }

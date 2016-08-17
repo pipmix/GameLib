@@ -3,8 +3,14 @@
 #include "Library\EngineCore.h"
 
 extern SpriteBatch* sb;
+extern Input* input;
 extern float gravity;
 extern Moves moves;
+extern HINSTANCE hInst;
+extern HWND hWnd;
+
+extern std::string debugStr01;
+extern std::string debugStr02;
 
 
 enum GameState { InitGS , TitleGS, GameGS };
@@ -30,6 +36,8 @@ class Game {
 
 		void SetGameState(GameState gs);
 
+		void PrintString(string s, int x, int y);
+
 
 		std::map<std::string, Texture*> textures;
 
@@ -40,7 +48,7 @@ class Game {
 
 		GameState currentGameState = InitGS;
 
-		Player* players[4];
+		Player* player;
 		int noPlayers = 0;
 
 		bool _quit;
@@ -49,5 +57,9 @@ class Game {
 		LevelData* lev[20];
 		Camera* camera;
 		int noMaps, noEnemy;
+
+		RECT heart;
+
+		bool isCollide = 0;
 
 };
