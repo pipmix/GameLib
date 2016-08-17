@@ -28,8 +28,8 @@ Camera::Camera() {
 	moveTo = { 0, 0, 0 };
 }
 
-XMMATRIX Camera::transformMatrix() {
-	XMFLOAT2 cPos = { 250,250 };
+XMMATRIX Camera::transformMatrix(Vector2& cPos) {
+	//XMFLOAT2 cPos = { 250,250 };
 	updateMatrix = true;
 
 	if (updateMatrix) {
@@ -63,7 +63,7 @@ XMMATRIX Camera::transformMatrix() {
 		pos.x = cPos.x;
 		pos.y = cPos.y;
 
-		XMStoreFloat4x4(&view, XMMatrixTranslation(-pos.x + 360, -pos.y + 240, zoom));
+		XMStoreFloat4x4(&view, XMMatrixTranslation(-pos.x + 120, -pos.y + 120, zoom));
 
 
 

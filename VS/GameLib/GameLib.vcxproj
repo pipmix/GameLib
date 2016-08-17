@@ -148,18 +148,19 @@
     <ClInclude Include="..\..\Library\Camera.h" />
     <ClInclude Include="..\..\Library\EngineCore.h" />
     <ClInclude Include="..\..\Library\EngineDataTypes.h" />
-    <ClInclude Include="..\..\Library\EngineLevel.h" />
     <ClInclude Include="..\..\Library\EngineQuad.h" />
     <ClInclude Include="..\..\Library\EngineScene.h" />
     <ClInclude Include="..\..\Library\EngineTimer.h" />
     <ClInclude Include="..\..\Library\GameObj.h" />
     <ClInclude Include="..\..\Library\Helpers.h" />
+    <ClInclude Include="..\..\Library\Input.h" />
     <ClInclude Include="..\..\Library\LevelData.h" />
     <ClInclude Include="..\..\Library\Player.h" />
     <ClInclude Include="..\..\Library\Sprite.h" />
     <ClInclude Include="..\..\Library\Texture.h" />
     <ClInclude Include="..\..\stdafx.h" />
     <ClInclude Include="..\..\Util\tinyxml2.h" />
+    <ClInclude Include="Util.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Game.cpp" />
@@ -168,11 +169,13 @@
     <ClCompile Include="..\..\Library\EngineDataTypes.cpp" />
     <ClCompile Include="..\..\Library\EngineTimer.cpp" />
     <ClCompile Include="..\..\Library\Helpers.cpp" />
+    <ClCompile Include="..\..\Library\Input.cpp" />
     <ClCompile Include="..\..\Library\LevelData.cpp" />
     <ClCompile Include="..\..\Library\Player.cpp" />
     <ClCompile Include="..\..\Library\Texture.cpp" />
     <ClCompile Include="..\..\Main.cpp" />
     <ClCompile Include="..\..\Util\tinyxml2.cpp" />
+    <ClCompile Include="Util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

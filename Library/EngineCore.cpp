@@ -13,8 +13,8 @@ EngineCore::EngineCore() {
 	DXGI_SWAP_CHAIN_DESC swapChainDesc;
 	ZeroMemory(&swapChainDesc, sizeof(swapChainDesc));
 	swapChainDesc.BufferCount = 1;
-	swapChainDesc.BufferDesc.Width = clientRect.right;
-	swapChainDesc.BufferDesc.Height = clientRect.bottom;
+	swapChainDesc.BufferDesc.Width = clientRect.right/2;
+	swapChainDesc.BufferDesc.Height = clientRect.bottom / 2;
 	swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	swapChainDesc.BufferDesc.RefreshRate.Numerator = 60;
 	swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
@@ -72,15 +72,6 @@ EngineCore::~EngineCore() {
 
 void EngineCore::Clear() {
 
-	/*
-		// Clear the views
-		context->ClearRenderTargetView(rtv, m_clearColor);
-		context->ClearDepthStencilView(dsv.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-		context->OMSetRenderTargets(1, m_renderTargetView.GetAddressOf(), m_depthStencilView.Get());
-
-		CD3D11_VIEWPORT viewPort(0.0f, 0.0f, static_cast<float>(w), static_cast<float>(h));
-		context->RSSetViewports(1, &viewPort);
-	*/
 
 }

@@ -11,6 +11,7 @@
 #include "LevelData.h"
 #include "Camera.h"
 #include "Player.h"
+#include "Input.h"
 
 extern SpriteBatch* sb;
 

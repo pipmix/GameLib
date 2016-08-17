@@ -14,7 +14,8 @@ class Texture {
 
 		void MoveSourceRect(int p);
 		void MoveSourceRect(int x, int y);
-
+		ID3D11ShaderResourceView* ReturnTRV();
+		RECT* ReturnSourceRect();
 
 		int tileW = 0;
 		int tileH = 0;

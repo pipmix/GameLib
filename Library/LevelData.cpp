@@ -5,6 +5,7 @@ LevelData::LevelData(std::wstring fN, Texture* t, int x, int y) : fileName(fN), 
 
 	LoadXML();
 	sourceRect = { 0, 0, texTileW , texTileH };
+	enclosureRect = { 0,0,0,0 };
 
 }
 
@@ -151,7 +152,7 @@ void LevelData::LoadXML() {
 
 			element = loopNode->ToElement();
 			if (element != NULL)tempStr2 = element->Attribute("type");
-			if (tempStr2 == "rect") {
+			if (tempStr2 == "Rect") {
 				if (tempStr == "Collide") {
 					collisionRects[i].left = stoi(element->Attribute("x")) + originX;
 					collisionRects[i].top = stoi(element->Attribute("y")) + originY;
@@ -192,6 +193,19 @@ void LevelData::LoadXML() {
 		}
 	}
 
+	std::ofstream myfile;
+	myfile.open("example.txt");
+	myfile << noColliders ;
+
+	for (int i = 0; i < noColliders; i++) {
+		myfile << "\n" << collisionRects[i].left << "  " << collisionRects[i].top << "  " << collisionRects[i].right << "  " << collisionRects[i].bottom;
+
+	}
+	myfile.close();
+
+
+	SetEnclosureRect();
+
 }
 
 int LevelData::countObjectsXML(tinyxml2::XMLNode* n) {
@@ -205,3 +219,91 @@ int LevelData::countObjectsXML(tinyxml2::XMLNode* n) {
 	}
 }
 
+
+
+bool LevelData::Collide(Player* p) {
+
+
+	//Intersect(p->collision, p->velocity, p->position);
+
+	Vector4 b1;
+	Vector4 b2;
+	b1.x = p->collision.left;
+	b1.y = p->collision.top;
+	b1.w = p->collision.right - p->collision.left;
+	b1.z = p->collision.bottom - p->collision.top;
+	for (int i = 0; i < noColliders; i++) {
+		b2.x = (float)(collisionRects[i].left);
+		b2.y = (float)(collisionRects[i].top);
+		b2.w = (float)(collisionRects[i].right - collisionRects[i].left);
+		b2.z = (float)(collisionRects[i].bottom - collisionRects[i].top);
+		p->velocity.x = p->velocity.y = 0.0f;
+		float l = b2.x - (b1.x + b1.w);
+		float r = (b2.x + b2.w) - b1.x;
+		float t = b2.y - (b1.y + b1.z);
+		float b = (b2.y + b2.z) - b1.y;
+		if (l > 0 || r < 0 || t > 0 || b < 0)
+			continue;
+		p->velocity.x = abs(l) < r ? l : r;
+		p->velocity.y = abs(t) < b ? t : b;
+		if (abs(p->velocity.x) < abs(p->velocity.y))p->velocity.y = 0.0f;
+		else p->velocity.x = 0.0f;
+		// NEED TO RESET COLLISION HERE IF MOVED
+		p->position += p->velocity;
+		p->SetCollision();
+		p->SetEdgePoints();
+		continue;
+	}
+	return 0;
+
+
+
+
+
+
+
+
+
+}
+
+
+
+// This just shows if something is overlapping, for testing collision boxes, wont show anything if AABB does the moving
+bool LevelData::Collide2(Player* p) {
+
+	RECT RectA = p->collision;
+	RECT RectB;
+	for (int i = 0; i < noColliders; i++) {
+
+		RectB = collisionRects[i];
+		if (RectA.left < RectB.right && RectA.right > RectB.left &&
+			RectA.top < RectB.bottom && RectA.bottom > RectB.top)return 1;
+	}
+	return 0;
+}
+
+
+bool LevelData::CollideEnclosureRect(Player* p) {
+	RECT RectA = p->collision;
+	SetEnclosureRect();
+	if (RectA.left < enclosureRect.right && RectA.right > enclosureRect.left &&
+			RectA.top < enclosureRect.bottom && RectA.bottom > enclosureRect.top)return 1;
+
+
+
+	return 0;
+
+}
+
+// Reusable in case moving levels
+void LevelData::SetEnclosureRect() {
+
+	enclosureRect = {originX, originY, originX + (mapNoTilesX*texTileW), originY + (mapNoTilesY*texTileH)};
+
+
+}
+
+bool LevelData::CollidePoints(Player* p) {
+
+	return 0;
+}

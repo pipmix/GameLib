@@ -8,7 +8,7 @@ class Camera {
 public:
 	Camera();
 
-	XMMATRIX 	transformMatrix();
+	XMMATRIX 	transformMatrix(Vector2& p);
 	void		Update(float time);
 	void		Follow(float time);
 

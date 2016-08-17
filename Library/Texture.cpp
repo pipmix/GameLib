@@ -41,3 +41,11 @@ void Texture::MoveSourceRect(int x, int y) {
 	sourceRect.right = sourceRect.left + tileW;
 	sourceRect.bottom = sourceRect.top + tileH;
 }
+
+ID3D11ShaderResourceView* Texture::ReturnTRV() {
+	return textureResourceView;
+}
+
+RECT* Texture::ReturnSourceRect() {
+	return &sourceRect;
+}

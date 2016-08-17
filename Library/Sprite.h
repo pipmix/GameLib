@@ -1,5 +1,6 @@
 #pragma once
 #include "../stdafx.h"
+#include "Texture.h"
 
 
 class Sprite {
@@ -15,6 +16,7 @@ public:
 	XMFLOAT3 scale;
 	RECT collision;
 
+	Texture* text;
 
 
 
