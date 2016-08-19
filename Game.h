@@ -1,16 +1,45 @@
 #pragma once
 
+#include <DirectXMath.h>
+#include <string>
+#include <map>
+#include <vector>
+
+
+
 #include "Library\EngineCore.h"
+
+
+using namespace DirectX;
+
+
+extern int gWidth;
+extern int gHeight;
+extern int gScale;
+
+
 
 extern SpriteBatch* sb;
 extern Input* input;
 extern float gravity;
-extern Moves moves;
 extern HINSTANCE hInst;
 extern HWND hWnd;
 
 extern std::string debugStr01;
 extern std::string debugStr02;
+
+extern RECT* DebugRect01;
+extern RECT* DebugRect02;
+extern RECT* DebugRect03;
+extern RECT* DebugRect04;
+
+extern XMFLOAT2* DebugF2_01;
+extern XMFLOAT2* DebugF2_02;
+extern XMFLOAT2* DebugF2_03;
+extern XMFLOAT2* DebugF2_04;
+
+extern XMFLOAT4* DebugF4_01;
+extern XMFLOAT4* DebugF4_02;
 
 
 enum GameState { InitGS , TitleGS, GameGS };
@@ -36,9 +65,10 @@ class Game {
 
 		void SetGameState(GameState gs);
 
-		void PrintString(string s, int x, int y);
-
-
+		void PrintString_Game(std::string s, int x, int y);
+		void DrawRect_Game(RECT* r);
+		void DrawF2_Game(XMFLOAT2* f);
+		void DrawF4_Game(XMFLOAT4* f);
 		std::map<std::string, Texture*> textures;
 
 
@@ -61,5 +91,15 @@ class Game {
 		RECT heart;
 
 		bool isCollide = 0;
+
+		std::vector<Particle*> particles;
+
+		Particle** part;
+
+		Randomize Randomize;
+
+		int particleTest;
+
+		Particle* part01;
 
 };

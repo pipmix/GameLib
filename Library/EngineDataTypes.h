@@ -1,22 +1,26 @@
 #pragma once
-#include "../stdafx.h"
+#include <windows.h>
+#include <DirectXMath.h>
+#include <string>
 
 using namespace DirectX;
-using namespace DirectX::SimpleMath;
+
 
 class Location {
 public:
 	Location();
 	Location(int, int, int, std::string);
 	~Location();
-	Vector2				ReturnLocation();
+	XMFLOAT2				ReturnLocation();
 	std::string*		ReturnString();
 	void				SetLocation(int, int, int, std::string);
 private:
-	Vector2				loc;
+	XMFLOAT2				loc;
 	std::string			locName;
 	int					locRadius;
 };
+
+
 
 class DataRect {
 
@@ -36,15 +40,7 @@ struct CIRC{
 
 };
 
-class Animation {
 
-public:
-	std::string name;
-	int noFrames;
-	int startFrame;
-	float speed;
-	bool loop;
-};
 
 
 struct Moves {

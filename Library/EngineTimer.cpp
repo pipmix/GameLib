@@ -1,5 +1,6 @@
 #include "EngineTimer.h"
 
+
 EngineTimer::EngineTimer() {
 
 	QueryPerformanceFrequency((LARGE_INTEGER*)&m_frequency);

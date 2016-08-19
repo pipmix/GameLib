@@ -1,10 +1,29 @@
 #pragma once
-#include "GameObj.h"
+
+#include <DirectXMath.h>
+#include "SpriteBatch.h"
 #include "Input.h"
+#include "Texture.h"
+#include "Animation.h"
 
 
 extern SpriteBatch* sb;
 extern Input* input;
+
+
+extern RECT* DebugRect01;
+extern RECT* DebugRect02;
+extern RECT* DebugRect03;
+extern RECT* DebugRect04;
+
+extern XMFLOAT2* DebugF2_01;
+extern XMFLOAT2* DebugF2_02;
+extern XMFLOAT2* DebugF2_03;
+extern XMFLOAT2* DebugF2_04;
+
+extern XMFLOAT4* DebugF4_01;
+extern XMFLOAT4* DebugF4_02;
+
 
 class Player{
 
@@ -15,8 +34,9 @@ public:
 
 	void Update(float t);
 	void Draw();
-	void SetEdgePoints();
-	void SetCollision();
+	void UpdateEdgePoints();
+	void UpdateCollision();
+	void UpdateAnimation();
 
 	void InitCollision();
 
@@ -35,10 +55,10 @@ public:
 	bool jump = 0;
 
 
-	Vector2 position;
-	Vector2 velocity;
+	XMFLOAT2 position;
+	XMFLOAT2 velocity;
 
-	RECT collision;
+	XMFLOAT4 collision;
 	XMVECTOR dir;
 
 	Texture* texture;
@@ -58,8 +78,21 @@ public:
 	bool edgeCollide_R;
 	bool edgeCollide_B;
 
-	POINT point_L;
-	POINT point_T;
-	POINT point_R;
-	POINT point_B;
+	XMFLOAT2 point_L;
+	XMFLOAT2 point_T;
+	XMFLOAT2 point_R;
+	XMFLOAT2 point_B;
+
+
+
+	int currentFrame;
+	int frameCount;
+
+	float animationFrameTime;
+	float timeElapsed;
+
+
+	AnimationBank* ab;
+
+
 };

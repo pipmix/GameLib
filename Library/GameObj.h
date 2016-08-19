@@ -36,7 +36,7 @@ public:
 
 	bool hasPhysics = 0;
 
-	std::map<std::string, Animation*> animation;
+
 	
 
 	 

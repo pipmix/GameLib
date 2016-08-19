@@ -1,6 +1,10 @@
-#include "stdafx.h"
+
 #include "Game.h"
-#include "SpriteBatch.h"
+
+
+int gWidth = 512;
+int gHeight = 512;
+int gScale = 2;
 
 static TCHAR szWindowClass[] = _T("pApp01");
 static TCHAR szTitle[] = _T("2D Play");
@@ -25,6 +29,19 @@ std::string debugStr02 = "";
 bool GlobalBool01 = 0;
 bool GlobalBool02 = 0;
 
+RECT* DebugRect01 = nullptr;
+RECT* DebugRect02 = nullptr;
+RECT* DebugRect03 = nullptr;
+RECT* DebugRect04 = nullptr;
+
+XMFLOAT2* DebugF2_01 = nullptr;
+XMFLOAT2* DebugF2_02 = nullptr;
+XMFLOAT2* DebugF2_03 = nullptr;
+XMFLOAT2* DebugF2_04 = nullptr;
+
+XMFLOAT4* DebugF4_01 = nullptr;
+XMFLOAT4* DebugF4_02 = nullptr;
+
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nCmdShow){
@@ -46,7 +63,7 @@ int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,i
 	RegisterClassEx(&wcex);
 
 	hInst = hInstance; 
-	hWnd = CreateWindow(szWindowClass,szTitle,WS_OVERLAPPEDWINDOW,CW_USEDEFAULT, CW_USEDEFAULT,512, 512,NULL,NULL,hInstance,NULL);
+	hWnd = CreateWindow(szWindowClass,szTitle,WS_OVERLAPPEDWINDOW,CW_USEDEFAULT, CW_USEDEFAULT, gWidth, gHeight,NULL,NULL,hInstance,NULL);
 	ShowWindow(hWnd,nCmdShow);
 	UpdateWindow(hWnd);
 
@@ -74,8 +91,10 @@ int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,i
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	switch (message) {
 		case WM_ACTIVATEAPP: {
-			Keyboard::ProcessMessage(message, wParam, lParam);
-			Mouse::ProcessMessage(message, wParam, lParam);
+			//Keyboard::ProcessMessage(message, wParam, lParam);
+
+
+			//Mouse::ProcessMessage(message, wParam, lParam);
 		} break;
 
 
@@ -91,14 +110,14 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 		case WM_XBUTTONDOWN:
 		case WM_XBUTTONUP:
 		case WM_MOUSEHOVER:
-			Mouse::ProcessMessage(message, wParam, lParam);
+			//Mouse::ProcessMessage(message, wParam, lParam);
 			break;
 
 		case WM_KEYDOWN:
 		case WM_SYSKEYDOWN:
 		case WM_KEYUP:
 		case WM_SYSKEYUP:
-			Keyboard::ProcessMessage(message, wParam, lParam);
+			//Keyboard::ProcessMessage(message, wParam, lParam);
 			break;
 
 

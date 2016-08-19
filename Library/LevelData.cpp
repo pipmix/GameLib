@@ -228,10 +228,10 @@ bool LevelData::Collide(Player* p) {
 
 	Vector4 b1;
 	Vector4 b2;
-	b1.x = p->collision.left;
-	b1.y = p->collision.top;
-	b1.w = p->collision.right - p->collision.left;
-	b1.z = p->collision.bottom - p->collision.top;
+	b1.x = p->collision.x;
+	b1.y = p->collision.y;
+	b1.w = p->collision.z - p->collision.x;
+	b1.z = p->collision.w - p->collision.y;
 	for (int i = 0; i < noColliders; i++) {
 		b2.x = (float)(collisionRects[i].left);
 		b2.y = (float)(collisionRects[i].top);
@@ -249,9 +249,11 @@ bool LevelData::Collide(Player* p) {
 		if (abs(p->velocity.x) < abs(p->velocity.y))p->velocity.y = 0.0f;
 		else p->velocity.x = 0.0f;
 		// NEED TO RESET COLLISION HERE IF MOVED
-		p->position += p->velocity;
-		p->SetCollision();
-		p->SetEdgePoints();
+		p->position.x += p->velocity.x;
+		p->position.y += p->velocity.y;
+
+		p->UpdateCollision();
+
 		continue;
 	}
 	return 0;
@@ -271,23 +273,23 @@ bool LevelData::Collide(Player* p) {
 // This just shows if something is overlapping, for testing collision boxes, wont show anything if AABB does the moving
 bool LevelData::Collide2(Player* p) {
 
-	RECT RectA = p->collision;
+	XMFLOAT4 RectA = p->collision;
 	RECT RectB;
 	for (int i = 0; i < noColliders; i++) {
 
 		RectB = collisionRects[i];
-		if (RectA.left < RectB.right && RectA.right > RectB.left &&
-			RectA.top < RectB.bottom && RectA.bottom > RectB.top)return 1;
+		if (RectA.x < RectB.right && RectA.z > RectB.left &&
+			RectA.y < RectB.bottom && RectA.w > RectB.top)return 1;
 	}
 	return 0;
 }
 
 
 bool LevelData::CollideEnclosureRect(Player* p) {
-	RECT RectA = p->collision;
+	XMFLOAT4 RectA = p->collision;
 	SetEnclosureRect();
-	if (RectA.left < enclosureRect.right && RectA.right > enclosureRect.left &&
-			RectA.top < enclosureRect.bottom && RectA.bottom > enclosureRect.top)return 1;
+	if (RectA.x < enclosureRect.right && RectA.z > enclosureRect.left &&
+			RectA.y < enclosureRect.bottom && RectA.w > enclosureRect.top)return 1;
 
 
 
@@ -304,6 +306,30 @@ void LevelData::SetEnclosureRect() {
 }
 
 bool LevelData::CollidePoints(Player* p) {
+	
+
+
+	for (int i = 0; i < noColliders; i++) {
+
+
+
+		/*
+		if(Util::CollidePointRect(p->point_L.x, p->point_L.y, collisionRects[i]))p->edgeCollide_L = 1;
+		if(Util::CollidePointRect(p->point_T.x, p->point_T.y, collisionRects[i]))p->edgeCollide_T = 1;
+		if(Util::CollidePointRect(p->point_R.x, p->point_R.y, collisionRects[i]))p->edgeCollide_R = 1;
+		if(Util::CollidePointRect(p->point_B.x, p->point_B.y, collisionRects[i]))p->edgeCollide_B = 1;
+		*/
+
+		if (Util::CollidePointRect(p->point_L, collisionRects[i]))	p->edgeCollide_L = 1;
+		if (Util::CollidePointRect(p->point_T, collisionRects[i]))	p->edgeCollide_T = 1;
+		if (Util::CollidePointRect(p->point_R, collisionRects[i]))	p->edgeCollide_R = 1;
+		if (Util::CollidePointRect(p->point_B, collisionRects[i]))	p->edgeCollide_B = 1;
+
+	}
+
+
 
 	return 0;
 }
+
+//CollidePointRect

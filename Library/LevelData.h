@@ -1,13 +1,18 @@
 #pragma once
-#include "../stdafx.h"
+
 #include "../Util/tinyxml2.h"
 #include "EngineDataTypes.h"
 #include "Player.h"
-#include <locale>
-#include <codecvt>
-#include "Texture.h"
 #include <fstream>
 #include <iostream>
+#include <locale>
+#include <codecvt>
+
+
+
+//#include "../VS/GameLib/Util.h"
+
+
 
 using namespace std;
 using namespace tinyxml2;
@@ -17,6 +22,21 @@ extern SpriteBatch* sb;
 
 extern std::string debugStr01;
 extern std::string debugStr02;
+
+
+extern RECT* DebugRect01;
+extern RECT* DebugRect02;
+extern RECT* DebugRect03;
+extern RECT* DebugRect04;
+
+extern XMFLOAT2* DebugF2_01;
+extern XMFLOAT2* DebugF2_02;
+extern XMFLOAT2* DebugF2_03;
+extern XMFLOAT2* DebugF2_04;
+
+extern XMFLOAT4* DebugF4_01;
+extern XMFLOAT4* DebugF4_02;
+
 
 
 class LevelData{

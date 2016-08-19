@@ -1,17 +1,20 @@
 #pragma once
-#include "../stdafx.h"
-#include "EngineTimer.h"
-#include "Keyboard.h"
-#include "Mouse.h"
-#include "GamePad.h"
-#include "PrimitiveBatch.h"
-#include "VertexTypes.h"
+
+#include <windows.h>
+#include <tchar.h>
+#include "SpriteBatch.h"
+#include "CommonStates.h"
+#include <string>
 #include <Effects.h>
-#include "Texture.h"
-#include "LevelData.h"
 #include "Camera.h"
-#include "Player.h"
-#include "Input.h"
+#include "EngineTimer.h"
+#include "LevelData.h"
+#include "Randomize.h"
+
+extern int gWidth;
+extern int gHeight;
+extern int gScale;
+
 
 extern SpriteBatch* sb;
 
@@ -39,24 +42,26 @@ class EngineCore {
 		CommonStates*					_commonStates;
 
 
-		SpriteFont* _spriteFont;
+
 
 		EngineTimer engineTimer;
 
-		Keyboard _keyboard;
-		Mouse _mouse;
-		GamePad _gamePad;
-		GamePad::ButtonStateTracker _buttons;
+		//Keyboard _keyboard;
+		//Mouse _mouse;
+		//GamePad _gamePad;
+		//GamePad::ButtonStateTracker _buttons;
 
 
 
 
 		// prim
-		PrimitiveBatch<VertexPositionColor> * _primitiveBatch;
+		//PrimitiveBatch<VertexPositionColor> * _primitiveBatch;
 		BasicEffect* _basicEffect;
 		ID3D11InputLayout* _inputLayout;
 		void const* shaderByteCode;
 		size_t byteCodeLength;
 
 		int w, h;
+
+	
 };

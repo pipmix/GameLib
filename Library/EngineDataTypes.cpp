@@ -15,5 +15,5 @@ void Location::SetLocation(int x, int y, int r, std::string s) {
 	locRadius = (int)r;
 	locName = s;
 }
-Vector2			Location::ReturnLocation() { return loc; }
+XMFLOAT2			Location::ReturnLocation() { return loc; }
 std::string*	Location::ReturnString() { return &locName; }

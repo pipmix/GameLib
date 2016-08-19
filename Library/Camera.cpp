@@ -28,7 +28,7 @@ Camera::Camera() {
 	moveTo = { 0, 0, 0 };
 }
 
-XMMATRIX Camera::transformMatrix(Vector2& cPos) {
+XMMATRIX Camera::transformMatrix(XMFLOAT2& cPos) {
 	//XMFLOAT2 cPos = { 250,250 };
 	updateMatrix = true;
 
@@ -84,10 +84,10 @@ void Camera::Update(float time) {
 void Camera::Follow(float time) {
 
 
-	XMMatrixTranslation(origin.x, origin.y, 0);
-	Vector2 sc = screenCenter;
-	Vector3 s = scale;
-	Vector3 o = sc / s;
-	origin = o;
+	//XMMatrixTranslation(origin.x, origin.y, 0);
+	//Vector2 sc = screenCenter;
+	//Vector3 s = scale;
+	//Vector3 o = sc / s;
+	//origin = o;
 
 }

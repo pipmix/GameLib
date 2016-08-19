@@ -1,5 +1,8 @@
 #pragma once
-#include "../stdafx.h"
+#include <windows.h>
+#include <DirectXMath.h>
+#include <cmath>
+using namespace DirectX;
 
 
 extern HWND hWnd;
@@ -8,7 +11,7 @@ class Camera {
 public:
 	Camera();
 
-	XMMATRIX 	transformMatrix(Vector2& p);
+	XMMATRIX 	transformMatrix(XMFLOAT2& p);
 	void		Update(float time);
 	void		Follow(float time);
 

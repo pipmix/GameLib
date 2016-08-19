@@ -1,5 +1,18 @@
 #pragma once
-#include "../stdafx.h"
+
+
+#include <windows.h>
+
+#include <d3d11_1.h>
+#include <DirectXMath.h>
+#include "DDSTextureLoader.h"
+#include "SimpleMath.h"
+#include "Particle.h"
+#pragma comment (lib, "d3d11.lib")
+
+
+using namespace DirectX;
+
 
 extern std::wstring gPath;
 

@@ -10,7 +10,7 @@ Player::Player() {
 	velocity = Vector2(0.0f, 0.0f);
 	collision = { 0,0,16,16 };
 
-	collisionOffset = 0;
+	collisionOffset = 2;
 	edgePointOffset = 1;
 
 	edgeCollide_L = 0;
@@ -22,6 +22,10 @@ Player::Player() {
 	point_T = { 0,0 };
 	point_R = { 0,0 };
 	point_B = { 0,0 };
+
+	ab = new AnimationBank("Player");
+
+
 
 
 	
@@ -36,14 +40,24 @@ void Player::InitCollision() {
 	//collisionH;
 	//collisionW;
 	collisionOffset = 2;
-	collision = { collisionOffset, collisionOffset, 16 - collisionOffset , 16 };
+	UpdateCollision();
 
-	SetEdgePoints();
+	DebugF2_01 = &point_L;
+	DebugF2_02 = &point_T;
+	DebugF2_03 = &point_R;
+	DebugF2_04 = &point_B;
+
+
+	DebugF4_01 = &collision;
+	//collision = { collisionOffset, collisionOffset, 16 - collisionOffset , 16 };
+
+	
 
 }
 
 void Player::Update(float t) {
 
+	// INPUT
 	if (hWnd == GetFocus()){
 
 		BYTE keyboardState[256];
@@ -59,16 +73,20 @@ void Player::Update(float t) {
 	}
 
 
-	// EDGE COLLIDE TEST
 
-	velocity.y += 8.0f;
+
+
+
+	velocity.y += 10.0f;
 
 	if (jump) 
 		if (isJumping == false) {
-			isJumping = true;
-			velocity.y -= 160.0f;
+			//isJumping = true;
+			velocity.y -= 1160.0f;
 
-		}
+	}
+
+
 
 	if (velocity.y == 0.0f) isJumping = false;
 		
@@ -81,17 +99,21 @@ void Player::Update(float t) {
 	if (left)velocity.x		= -1 * speed;
 	if (right)velocity.x	= 1 *speed;
 
-	position += velocity;
+	position.x += velocity.x;
+	position.y += velocity.y;
 
 	velocity.x = velocity.x * 0.3f;
 	velocity.y = velocity.y * 0.3f;
 
 
-	SetCollision();
 
-	
-	SetEdgePoints();
+
 	up = down = left = right = jump = 0;
+	
+
+	UpdateCollision();
+
+
 
 
 }
@@ -99,22 +121,45 @@ void Player::Draw() {
 
 
 	sb->Draw(texture->textureResourceView, position, &texture->sourceRect);
+	//		batch->Draw(mTexture.Get(), screenPos, &sourceRect, DirectX::Colors::White,mRotation, mOrigin, mScale, DirectX::SpriteEffects_None, mDepth);
 
 }
 
 
-void Player::SetEdgePoints() {
+void Player::UpdateEdgePoints() {
 
-	long collisionMidpointX = collision.bottom - collision.top;
-	long collisionMidpointY = collision.right - collision.left;
+	long collisionMidpointX = (collision.z + collision.x)/2;
+	long collisionMidpointY = (collision.w + collision.y)/2;
 
-	point_L = { collision.left - edgePointOffset , collisionMidpointY };
-	point_T = { collisionMidpointX , collision.top - edgePointOffset };
-	point_R = { collision.right + edgePointOffset , collisionMidpointY };
-	point_B = { collisionMidpointX , collision.bottom + edgePointOffset };
+	point_L = { (float)(collision.x - edgePointOffset) , (float)collisionMidpointY };	//		x1
+	point_T = { (float)collisionMidpointX , (float)(collision.y - edgePointOffset) };		//		y1
+	point_R = { (float)(collision.z + edgePointOffset) , (float)collisionMidpointY };	//	x2
+	point_B = { (float)collisionMidpointX , (float)(collision.w + edgePointOffset) };	//	y2
 
+	edgeCollide_L = edgeCollide_T = edgeCollide_R = edgeCollide_B = 0;
 }
 
-void Player::SetCollision(){
-	collision = { (long)position.x + (long)collisionOffset, (long)position.y + (long)collisionOffset, ((long)position.x + 16) - (long)collisionOffset, ((long)position.y + 16) };
+void Player::UpdateCollision(){
+
+	//collision = { (long)position.x + (long)collisionOffset, (long)position.y + (long)collisionOffset, ((long)position.x + 16) - (long)collisionOffset, ((long)position.y + 16) };
+	collision = { position.x + collisionOffset, position.y - collisionOffset, (position.x + 16) - collisionOffset, (position.y + 16) };
+	UpdateEdgePoints();
+}
+
+
+void Player::UpdateAnimation() {
+
+	if (timeElapsed > animationFrameTime) {
+		// increase frame
+		timeElapsed -= animationFrameTime;
+
+
+
+	}
+	float timeElapsed;
+
+	string anim = "a";
+
+	//currentFrame = ab->animations[anim].animStartFrame
+
 }

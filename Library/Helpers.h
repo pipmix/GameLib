@@ -1,5 +1,6 @@
 #pragma once
-#include "../stdafx.h"
+#include <DirectXMath.h>
+using namespace DirectX;
 
 bool IntersectsFloat(XMFLOAT4& rectA, XMFLOAT4& rectB);
 

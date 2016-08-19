@@ -1,5 +1,5 @@
 #pragma once
-#include "../stdafx.h"
+#include <windows.h>
 
 
 class EngineTimer {
@@ -13,4 +13,7 @@ class EngineTimer {
 	private:
 		INT64 m_frequency, m_startTime;
 		float m_ticksPerMs, m_frameTime;
+
+
+
 };
