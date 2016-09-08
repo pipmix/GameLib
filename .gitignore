@@ -1,0 +1,4 @@
+*.obj
+VS/GameLib/Debug/
+VS/GameLib/Release/
+VS/GameLib/Packages/
