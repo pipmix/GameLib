@@ -4,7 +4,7 @@
 #include "SpriteBatch.h"
 #include "Input.h"
 #include "Texture.h"
-#include "Animation.h"
+
 
 
 extern SpriteBatch* sb;
@@ -92,7 +92,6 @@ public:
 	float timeElapsed;
 
 
-	AnimationBank* ab;
 
 
 };

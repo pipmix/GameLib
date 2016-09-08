@@ -2,3 +2,8 @@
 VS/GameLib/Debug/
 VS/GameLib/Release/
 VS/GameLib/Packages/
+VS/GameLib/GameLib.VC.VC.opendb
+VS/GameLib/GameLib.VC.db
+VS/GameLib/GameLib.VC.db
+VS/GameLib/example.txt
+*.db

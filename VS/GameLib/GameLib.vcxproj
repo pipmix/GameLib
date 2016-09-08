@@ -144,7 +144,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Game.h" />
-    <ClInclude Include="..\..\Library\Animation.h" />
     <ClInclude Include="..\..\Library\Camera.h" />
     <ClInclude Include="..\..\Library\EngineCore.h" />
     <ClInclude Include="..\..\Library\EngineDataTypes.h" />
@@ -162,7 +161,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Game.cpp" />
-    <ClCompile Include="..\..\Library\Animation.cpp" />
     <ClCompile Include="..\..\Library\Camera.cpp" />
     <ClCompile Include="..\..\Library\EngineCore.cpp" />
     <ClCompile Include="..\..\Library\EngineDataTypes.cpp" />

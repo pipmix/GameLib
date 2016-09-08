@@ -23,7 +23,7 @@ Player::Player() {
 	point_R = { 0,0 };
 	point_B = { 0,0 };
 
-	ab = new AnimationBank("Player");
+
 
 
 
@@ -158,7 +158,7 @@ void Player::UpdateAnimation() {
 	}
 	float timeElapsed;
 
-	string anim = "a";
+
 
 	//currentFrame = ab->animations[anim].animStartFrame
 
